@@ -1,0 +1,7 @@
+﻿<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="40" rx="12" fill="#0F172A"/>
+  <path d="M22 12C16.477 12 12 16.477 12 22C12 27.523 16.477 32 22 32H30V12H22Z" fill="#2563EB"/>
+  <path d="M44 12H34V32H44C48.418 32 52 28.418 52 24C52 19.582 48.418 16 44 16V12Z" fill="#F97316"/>
+  <path d="M66 12H58V32H66C70.418 32 74 28.418 74 24C74 19.582 70.418 16 66 16V12Z" fill="#FACC15"/>
+  <text x="80" y="27" fill="#F8FAFC" font-family="'Space Grotesk', 'Segoe UI', sans-serif" font-size="16" font-weight="600">djd</text>
+</svg>
