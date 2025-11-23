@@ -42,7 +42,7 @@ npm install
 项目提供 `tools/blog-tool.ps1`，包含两个常用工作流：
 
 ```powershell
-# 1) 一键清理 + 生成 + 启动本地服务（新窗口）
+# 1) 一键清理 + 生成 + 启动本地服务（当前终端，Ctrl+C 停止）
 powershell -ExecutionPolicy Bypass -File tools/blog-tool.ps1 -Action preview
 
 # 2) 一键清理 + 生成 + hexo deploy

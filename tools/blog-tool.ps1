@@ -35,9 +35,7 @@ switch ($Action) {
   "preview" {
     Invoke-Step @("npx", "hexo", "clean") "Hexo clean"
     Invoke-Step @("npx", "hexo", "generate") "Hexo generate"
-    Write-Host "`n==> Starting hexo server (new window)..." -ForegroundColor Yellow
-    Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd `"$repoRoot`"; npx hexo server"
-    Write-Host "Server launched. Press Ctrl+C in that window to stop."
+    Invoke-Step @("npx", "hexo", "server") "Hexo server (Ctrl+C to stop)"
   }
   "deploy" {
     Invoke-Step @("npx", "hexo", "clean") "Hexo clean"
