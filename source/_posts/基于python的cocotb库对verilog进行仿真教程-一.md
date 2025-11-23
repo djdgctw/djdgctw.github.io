@@ -5,7 +5,7 @@ tags:
   - cocotb
   - verilog
 description: 基于 Verilator 与 Cocotb 对 Verilog 模块进行协同仿真的基础流程与原理讲解。
-cover: /img/01_cocotb/cover.png
+cover: /img/01_cocotb/03.png
 ---
 
 ## 项目地址
