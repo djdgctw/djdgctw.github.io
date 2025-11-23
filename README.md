@@ -107,17 +107,9 @@ npm install
        ```
        ```bash
        npm install hexo-deployer-git --save
-       npx hexo deploy        # 自动将 public/ 推送到 gh-pages
+       npx hexo clean && npx hexo g && npx hexo deploy       # 自动将 public/ 推送到 gh-pages
        ```
-     - 方案 B：手动推送 `public/`
-       ```bash
-       cd public
-       git init
-       git remote add origin https://github.com/<your-name>/<your-repo>.git
-       git checkout -b gh-pages
-       git add .
-       git commit -m "deploy"
-       git push -f origin gh-pages
+    
        ```
   5. **GitHub Pages 设置**：在仓库 Settings → Pages 中选择 `gh-pages` 分支 / `docs` 目录（取决于你的部署方式）。
 

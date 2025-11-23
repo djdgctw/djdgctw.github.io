@@ -100,7 +100,10 @@ theme: butterfly
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/djdgctw/djdgctw.github.io.git
+  branch: gh-pages
+
 
 feed:
   type: atom
