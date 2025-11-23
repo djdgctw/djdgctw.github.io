@@ -4,9 +4,11 @@ date: 2025-11-23 13:24:27
 tags:
   - cocotb
   - verilog
-description: 基于 Verilator 与 Cocotb 对 Verilog 模块进行协同仿真的基础流程与原理讲解。
-cover: /img/01_cocotb/03.png
+description: 基于 Verilator 与 Cocotb 对 Verilog 模块进行协同仿真的基础流程与原理讲解
+cover: /img/01_cocotb/03.png   # 首页/列表封面
+top_img: /img/01_cocotb/hero.png   # 可选，文章顶部横幅
 ---
+
 
 ## 项目地址
 
