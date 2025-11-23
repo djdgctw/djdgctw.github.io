@@ -37,6 +37,21 @@ npm install
 
 > 预览调试时推荐：`npx hexo s -o` 自动打开浏览器。完成修改后运行 `hexo g` 产出最终文件，再部署到 GitHub Pages。
 
+### 脚本快捷方式
+
+项目提供 `tools/blog-tool.ps1`，包含两个常用工作流：
+
+```powershell
+# 1) 一键清理 + 生成 + 启动本地服务（新窗口）
+powershell -ExecutionPolicy Bypass -File tools/blog-tool.ps1 -Action preview
+
+# 2) 一键清理 + 生成 + hexo deploy
+#    如有源码改动，会提示输入 git commit 信息并推送 main 分支
+powershell -ExecutionPolicy Bypass -File tools/blog-tool.ps1 -Action deploy
+```
+
+根据提示操作即可快速预览或发布。
+
 ## 4. 写作 / 内容维护
 
 1. **新建文章**  
