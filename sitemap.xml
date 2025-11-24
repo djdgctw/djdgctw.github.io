@@ -117,6 +117,13 @@
   </url>
   
   <url>
+    <loc>https://djdgctw.github.io/tags/verilog/</loc>
+    <lastmod>2025-11-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://djdgctw.github.io/tags/verilator/</loc>
     <lastmod>2025-11-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -125,13 +132,6 @@
   
   <url>
     <loc>https://djdgctw.github.io/tags/gtkwave/</loc>
-    <lastmod>2025-11-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://djdgctw.github.io/tags/verilog/</loc>
     <lastmod>2025-11-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
