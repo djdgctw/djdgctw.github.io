@@ -1,0 +1,338 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>HDMI1.4协议阅读笔记 | djdgctw 的硬件笔记</title><meta name="author" content="djdgctw"><meta name="copyright" content="djdgctw"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="HDMI1.4协议阅读笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDMI1.4协议阅读笔记">
+<meta property="og:url" content="https://djdgctw.github.io/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="djdgctw 的硬件笔记">
+<meta property="og:description" content="HDMI1.4协议阅读笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://djdgctw.github.io/img/02_HDMI/HDMI%E6%A1%86%E6%9E%B6%E5%9B%BE.png">
+<meta property="article:published_time" content="2025-11-24T06:30:00.000Z">
+<meta property="article:modified_time" content="2025-11-24T08:46:20.481Z">
+<meta property="article:author" content="djdgctw">
+<meta property="article:tag" content="HDMI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://djdgctw.github.io/img/02_HDMI/HDMI%E6%A1%86%E6%9E%B6%E5%9B%BE.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "HDMI1.4协议阅读笔记",
+  "url": "https://djdgctw.github.io/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/",
+  "image": "https://djdgctw.github.io/img/02_HDMI/HDMI%E6%A1%86%E6%9E%B6%E5%9B%BE.png",
+  "datePublished": "2025-11-24T06:30:00.000Z",
+  "dateModified": "2025-11-24T08:46:20.481Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "djdgctw",
+      "url": "https://djdgctw.github.io"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.svg"><link rel="canonical" href="https://djdgctw.github.io/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.2"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d1117')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: true,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HDMI1.4协议阅读笔记',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/atom.xml" title="djdgctw 的硬件笔记" type="application/atom+xml">
+</head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@1/themes/blue/pace-theme-minimal.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><div id="web_bg" style="background: linear-gradient(130deg,#f8fbff 0%,#eef4ff 40%,#fef9f1 100%);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/%E7%8C%AB%E7%8C%AB.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> 系列</span></a></div><div class="menus_item"><a class="site-page" href="/about/#roadmap"><span> 路线图</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/01_cocotb/env-hero.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/logo.svg" alt="Logo" loading='lazy'><span class="site-name">djdgctw 的硬件笔记</span></a><a class="nav-page-title" href="/"><span class="site-name">HDMI1.4协议阅读笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> 系列</span></a></div><div class="menus_item"><a class="site-page" href="/about/#roadmap"><span> 路线图</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">HDMI1.4协议阅读笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-11-24T06:30:00.000Z" title="发表于 2025-11-24 14:30:00">2025-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-11-24T08:46:20.481Z" title="更新于 2025-11-24 16:46:20">2025-11-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8E%A5%E5%8F%A3%E5%8D%8F%E8%AE%AE/">接口协议</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:480,&quot;messagePrev&quot;:&quot;这篇文章已经超过&quot;,&quot;messageNext&quot;:&quot;天没有更新，信息可能已经过时。&quot;,&quot;postUpdate&quot;:&quot;2025-11-24 16:46:20&quot;}" hidden></div><h1 id="HDMI传输系统综述"><a href="#HDMI传输系统综述" class="headerlink" title="HDMI传输系统综述"></a>HDMI传输系统综述</h1><p>一个HDMI传输系统包括发送端（source）和接收端（sink）。HDMI线缆包括以下连接：</p>
+<ul>
+<li>由四个差分对组成的主数据通路，包括三个数据通道和一个时钟通道。</li>
+<li>VESA DDC，实际上就是一个I2C bus，用于配置和状态信息的传输</li>
+<li>CEC（optional），消费电子控制</li>
+<li>HEAC，家庭影院系统中音频回传功能</li>
+<li>HPD，热插拔检测<br><img src="/img/02_HDMI/HDMI%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="HDMI框架图" loading='lazy'><br>HDMI物理层的实现不在此次赘述，下面直接进入HDMI的数据链路层。</li>
+</ul>
+<h2 id="HDMI信号编码"><a href="#HDMI信号编码" class="headerlink" title="HDMI信号编码"></a>HDMI信号编码</h2><p>HDMI一共有三种传输模式：Control Period传输control data；Data Island Period传输packet data；Video Data Period传输video data。</p>
+<p>同步信号HSYNC和VSYNC会在特定的行、列位置拉起，用于source和sink之间的同步。可以看到实际传输的帧大小是要大于视频大小（720*480p），包括额外插入了一些行，并且行的长度也得到了扩展，这些扩展的区域被称为blank区（包括Vblank和Hblank），blank区由Control Period和Data Island Period交替填充，其中在Data Island Period会传输音频数据和其他辅助数据（例如像素格式等）。实际传输Video Data Period的区域称为active区，传输我们最终会在显示器上看到的视频图像数据。<br><img src="/img/02_HDMI/02.png" alt="显示时序图" loading='lazy'><br>在HDMI clock channel上每一拍时钟（又称为一个TMDS Clock），每个data channel上都会传输10bit的character。这10bit的character，对于不同的数据，由不同的编码方式得到：</p>
+<ul>
+<li>control data：2 bit -&gt; 10 bit编码</li>
+<li>packet data：4 bit -&gt; 10 bit编码（TERC4编码）</li>
+<li>video data：8 bit -&gt; 10 bit编码（TMDS编码）</li>
+</ul>
+<p>换句话说，每个TMDS Clock，在每个data channel上，会传输2bit的control data，或者4bit的packet data，或者10bit的control data。<br><img src="/img/02_HDMI/03.png" alt="信号传输框架" loading='lazy'></p>
+<h3 id="Control-data"><a href="#Control-data" class="headerlink" title="Control data"></a>Control data</h3><ul>
+<li>在channel 0的2bit数据代表HSYNC和VSYNC</li>
+<li>channel 1和channel 2上的4bit数据组合构成CTL0-3，其代表的具体信息在后文介绍。</li>
+</ul>
+<h3 id="Packet-data"><a href="#Packet-data" class="headerlink" title="Packet data"></a>Packet data</h3><ul>
+<li>channel 0上的4bit数据包含HSYNC、VSYNC以及packet header，packet header用于sink判断当前packet的类型（音频包、辅助信息包等）</li>
+<li>channel 1和channel 2上传输实际packet信息，如音频包会在这两个channel上传输音频信号采样值。</li>
+</ul>
+<h3 id="Video-data"><a href="#Video-data" class="headerlink" title="Video data"></a>Video data</h3><ul>
+<li>channel 0到channel 2上总共24bit，均为视频像素数据。</li>
+</ul>
+<h2 id="Data-Island-Period-和-Video-Data-Period-的传输规则"><a href="#Data-Island-Period-和-Video-Data-Period-的传输规则" class="headerlink" title="Data Island Period 和 Video Data Period 的传输规则"></a>Data Island Period 和 Video Data Period 的传输规则</h2><h3 id="Data-Island-Period"><a href="#Data-Island-Period" class="headerlink" title="Data Island Period"></a>Data Island Period</h3><ul>
+<li>紧贴Data Island Period传输的前后，分别有一个Data Island Guard Band（称为Leading Guard Band和Trailing Guard Band），长度均为2个TMDS Clock。</li>
+<li>在Leading Data Island Guard Band前面，有一个Data Island Preamble，长度为8个TMDS Clock。</li>
+<li>由于HDMI1.4协议规定，每次发Control Period必须连续发至少12个TMDS Clock。由于Data Island Preamble被视为一种特殊的Control Period，因此在Data Island Preamble前面会有至少连续4 TMDS Clock的Control Period。</li>
+<li>在两个Data Island Guard Band包围起来的中间区域，会发送实际的packet data。每一个packet需要32个TMDS Clock，可以连续发送最少1个，最多18个packet。因此每一个Data Island Period的最小长度为1×32 + 2×2 &#x3D; 36 TMDS Clock（头尾的两个Guard Band也是Data Island Period的一部分）。</li>
+</ul>
+<h3 id="Video-Data-Period"><a href="#Video-Data-Period" class="headerlink" title="Video Data Period"></a>Video Data Period</h3><ul>
+<li>与Data Island Period类似，有一个长度为2 TMDS Clock的Video Data Guard Band，但仅存在于Video Data Period传输最开始（也即只有Leading Guard Band）。</li>
+<li>同样有一个长度为8 TMDS Clock的Video Data Preamble。</li>
+<li>Video Data Preamble前面同样会有至少连续4 TMDS Clock的Control Period。</li>
+<li>Data Island Period和Video Data Period不能紧贴，无论哪一个在前，在前者传输完成后必须传输一段Control Period，才能传输后者。<br><img src="/img/02_HDMI/04.png" alt="TMDS Period AND Encode" loading='lazy'></li>
+</ul>
+<h2 id="Control-Period"><a href="#Control-Period" class="headerlink" title="Control Period"></a>Control Period</h2><p>Control Period在channel 0上传输HSYNC和VSYNC，在channel 1-2上传输CTL0-3。HDMI1.4协议下，CTL0-3主要用于Video Data Preamble和Data Island Preamble传输，以及被sink用作为Character Synchronization（也用于HDCP1.4 EESS信号传输）。<br><img src="/img/02_HDMI/05.png" loading='lazy'></p>
+<h3 id="Preamble"><a href="#Preamble" class="headerlink" title="Preamble"></a>Preamble</h3><p>Channel 0上的HSYNC和VSYNC在Preamble期间按实际情况正常传输<br><img src="/img/02_HDMI/06.png" loading='lazy'></p>
+<h3 id="Character-Synchronization"><a href="#Character-Synchronization" class="headerlink" title="Character Synchronization"></a>Character Synchronization</h3><ul>
+<li>TMDS Character是指每次编码后，每个TMDS Clock传输的10 bit值。</li>
+<li>经过编码后，Video Data Period和Data Island Period的每个character会包含5次或者更少的1-&gt;0或0-&gt;1跳转，而Control Period会包含7次或更多的跳转。</li>
+<li>基于此，source端的每次Control Period需要持续12个TMDS Clocks，而sink端的解码器应该能识别到这样连续的Contral Period传输，从而同步到Character边界。Sink端的检测算法实现由其自行决定，不在HDMI1.4协议中做要求。<br><img src="/img/02_HDMI/07.png" loading='lazy'></li>
+<li>每隔一定时间间隔（至少50毫秒一次），source端还被要求要发一个持续时间更长（32 TMDS Clocks）的Control Period，被称为Extended Control Period。<br><img src="/img/02_HDMI/08.png" loading='lazy'></li>
+</ul>
+<h3 id="Control-Period-Encoding"><a href="#Control-Period-Encoding" class="headerlink" title="Control Period Encoding"></a>Control Period Encoding</h3><p><img src="/img/02_HDMI/09.png" loading='lazy'></p>
+<h2 id="Data-Island-Period-1"><a href="#Data-Island-Period-1" class="headerlink" title="Data Island Period"></a>Data Island Period</h2><p>对于Data Island Period（包括对应的Guard Band）的传输：</p>
+<ul>
+<li>下面指代的是[3:0]长度的那个信号</li>
+<li>channel 0中的D0和D1分别传输HSYNC 和VSYNC</li>
+<li>D2传输Packet Header（在Guard Band区域固定传输1）</li>
+<li>D3在Leading Guard Band后的第一个TMDS Clock传输0，在其他TMDS Clock（包括Guard Band）传输</li>
+<li>channel 1和channel 2的总计8bit用于传输Packet Data（Guard Band区域会传输固定的10 bits character）</li>
+</ul>
+<h3 id="Data-Island-Guard-Band"><a href="#Data-Island-Guard-Band" class="headerlink" title="Data Island Guard Band"></a>Data Island Guard Band</h3><ul>
+<li>Data Island Guard Band时，channel 1和channel 2被直接编码为实际HDMI Lane上固定的10 bit Character，其值如下图，其中channel0由编译规则决定，NA实际上是不确定的意思<br><img src="/img/02_HDMI/10.png" alt="Data Island Guard Band时,channel1,2编码后固定值" loading='lazy'></li>
+<li>channel 0上，D2和D3被固定为1，因此，依据HSYNC和VSYNC的取值，channel 0上D[3:0]可能的取值为0xC，0xD，0xE，0xF，并通过TERC4编码为10bit character</li>
+</ul>
+<h3 id="Data-Island-Packet（数据岛包）结构说明"><a href="#Data-Island-Packet（数据岛包）结构说明" class="headerlink" title="Data Island Packet（数据岛包）结构说明"></a>Data Island Packet（数据岛包）结构说明</h3><p>在 HDMI Data Island Period 中，所有音频包和 InfoFrame 辅助数据都以 <strong>Packet</strong> 的形式传输。<br>每一个 Packet 占用 <strong>32 个 TMDS Clocks</strong>，由以下两大部分组成：</p>
+<ol>
+<li><strong>Packet Header（包头）</strong>  </li>
+<li><strong>Packet Body（包含 4 个 Subpacket 的包体）</strong></li>
+</ol>
+<p>每个部分都包含对应的 <strong>BCH 纠错位（ECC）</strong>。</p>
+<h4 id="1-Packet-Header（24bit-数据-8bit-BCH-校验）"><a href="#1-Packet-Header（24bit-数据-8bit-BCH-校验）" class="headerlink" title="1. Packet Header（24bit 数据 + 8bit BCH 校验）"></a>1. Packet Header（24bit 数据 + 8bit BCH 校验）</h4><p>Packet Header 共 24bit，由 3 个 Header Bytes（HB0、HB1、HB2）组成。<br>根据 HDMI 规范，需为 Header 添加 <strong>8bit 的 BCH(32,24) 校验位</strong>，构成 <strong>32bit 的 BCH Block4</strong>。<br><strong>该 BCH Block4 通过 Channel 0 的 D2 线上传输。</strong></p>
+<h4 id="2-Packet-Body（4-个-Subpacket）"><a href="#2-Packet-Body（4-个-Subpacket）" class="headerlink" title="2. Packet Body（4 个 Subpacket）"></a>2. Packet Body（4 个 Subpacket）</h4><p>Packet Body 包含 <strong>4 个 Subpacket</strong>，每个 Subpacket 包含：</p>
+<ul>
+<li><strong>56 bits 数据</strong></li>
+<li><strong>8 bits BCH(64,56) 校验位</strong><br>每个 Subpacket 构成一个 BCH Block（Block0–Block3）。<br><strong>这些 BCH Blocks 通过 Channel 1 和 Channel 2 传输。</strong></li>
+</ul>
+<h4 id="3-Subpacket-到-Packet-Bytes（PBx）的映射"><a href="#3-Subpacket-到-Packet-Bytes（PBx）的映射" class="headerlink" title="3. Subpacket 到 Packet Bytes（PBx）的映射"></a>3. Subpacket 到 Packet Bytes（PBx）的映射</h4><p>每个 Subpacket 的 56bit 等于 <strong>7 个字节</strong>：SB0, SB1, SB2, SB3, SB4, SB5, SB6<br>4 个 Subpacket 共 <strong>28 个字节</strong>，HDMI 将它们顺序拼接为：PB0 ~ PB27</p>
+<ul>
+<li>映射关系如下：<table>
+<thead>
+<tr>
+<th>Subpacket</th>
+<th>包含字节</th>
+<th>映射到 PB 范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Subpacket0</td>
+<td>SB0–SB6</td>
+<td>PB0 – PB6</td>
+</tr>
+<tr>
+<td>Subpacket1</td>
+<td>SB0–SB6</td>
+<td>PB7 – PB13</td>
+</tr>
+<tr>
+<td>Subpacket2</td>
+<td>SB0–SB6</td>
+<td>PB14 – PB20</td>
+</tr>
+<tr>
+<td>Subpacket3</td>
+<td>SB0–SB6</td>
+<td>PB21 – PB27</td>
+</tr>
+</tbody></table>
+</li>
+<li>这种连续映射方式方便 Sink 对 Packet Body 进行线性解析，也符合 BCH Block 数据布局要求，解码时根据这个解码。</li>
+</ul>
+<p>关系图如下<br><img src="/img/02_HDMI/11.png" alt="Data Island Guard Band时,channel1,2编码后固定值" loading='lazy'></p>
+<h3 id="纠错位计算（ECC）"><a href="#纠错位计算（ECC）" class="headerlink" title="纠错位计算（ECC）"></a>纠错位计算（ECC）</h3><p>HDMI 的 Data Island Packet 使用 BCH 纠错码来保护 Header 与 Subpacket 的数据完整性。</p>
+<ul>
+<li><strong>BCH(64,56)</strong> 用于 56bit Subpacket 数据  </li>
+<li><strong>BCH(32,24)</strong> 用于 24bit Packet Header 数据</li>
+</ul>
+<p>纠错位由标准的 BCH 生成多项式计算得到。<br>具体的 BCH 计算细节不在此处展开。</p>
+<p><img src="/img/02_HDMI/12.png" alt="Packet纠错位" loading='lazy'></p>
+<h3 id="Packet-Header-和-Packet-Body-的定义"><a href="#Packet-Header-和-Packet-Body-的定义" class="headerlink" title="Packet Header 和 Packet Body 的定义"></a>Packet Header 和 Packet Body 的定义</h3><p>Packet Header（HB0、HB1、HB2）以及 Packet Body（Subpacket 结构）在 HDMI1.4 数据岛章节中有详细定义。<br>后续文章会继续展开具体结构和类型意义。</p>
+<h3 id="Data-Island-Period-编码：TERC4（后面修）"><a href="#Data-Island-Period-编码：TERC4（后面修）" class="headerlink" title="Data Island Period 编码：TERC4（后面修）"></a>Data Island Period 编码：TERC4（后面修）</h3><p>Data Island 中的所有 4bit 数据必须通过 <strong>TERC4 编码</strong> 转换为 10bit TMDS 字符。<br>TERC4 是 HDMI 定义的固定编码表，被用于 Packet Data、Guard Band 等区域。<br>Data Island Period<br>│<br>├── Guard Band (TERC4)<br>├── Preamble (TERC4)<br>│<br>└── Packet<br>     ├── Header (4bit nibbles → TERC4)<br>     └── Body   (4bit nibbles → TERC4)</p>
+<p><img src="/img/02_HDMI/13.png" alt="TERC4编码示意" loading='lazy'></p>
+<h3 id="Video-Data-Period-1"><a href="#Video-Data-Period-1" class="headerlink" title="Video Data Period"></a>Video Data Period</h3><p>Video Data Period 是 HDMI 用于传输实际像素 RGB 数据的区域。</p>
+<h4 id="1-Video-Data-Period-Signal"><a href="#1-Video-Data-Period-Signal" class="headerlink" title="1. Video Data Period Signal"></a>1. Video Data Period Signal</h4><p>在 Video Data Period 内：</p>
+<ul>
+<li>Video Data 的 Guard Band 用于告知 Sink：即将进入 Video Data Period</li>
+<li><strong>Guard Band（前导 GB）</strong>：3 个通道会发送固定的 TMDS 字符，固定字符如下<br><img src="/img/02_HDMI/14.png" alt="Video Data Period Signal" loading='lazy'></li>
+<li><strong>Active Video 区域</strong>：三通道传输 RGB，每个通道 8bit</li>
+</ul>
+<h4 id="3-Pixel-Data-像素数据-后面修"><a href="#3-Pixel-Data-像素数据-后面修" class="headerlink" title="3. Pixel Data(像素数据)(后面修)"></a>3. Pixel Data(像素数据)(后面修)</h4><p>Active Video 区域内：</p>
+<ul>
+<li>Channel 0 → Blue（8bit）</li>
+<li>Channel 1 → Green（8bit）</li>
+<li>Channel 2 → Red（8bit）</li>
+</ul>
+<p>像素数据经 TMDS 编码后以 10bit character 输出。</p>
+<p>（具体 Pixel 格式与 InfoFrame 中 AVI 信息相关，将在后续章节展开。）</p>
+<hr>
+<h3 id="Video-Data-Period-编码：TMDS（8bit-→-10bit）"><a href="#Video-Data-Period-编码：TMDS（8bit-→-10bit）" class="headerlink" title="Video Data Period 编码：TMDS（8bit → 10bit）"></a>Video Data Period 编码：TMDS（8bit → 10bit）</h3><p>TMDS 编码的目标：</p>
+<ul>
+<li>减少跳变次数（减少 EM 噪声）</li>
+<li>保持直流平衡（长期传输中 1&#x2F;0 数量保持平均）<br>TMDS 编码包含两个步骤：</li>
+</ul>
+<h4 id="Step-1：8bit-→-9bit（最小化跳变）"><a href="#Step-1：8bit-→-9bit（最小化跳变）" class="headerlink" title="Step 1：8bit → 9bit（最小化跳变）"></a>Step 1：8bit → 9bit（最小化跳变）</h4><p>第一步8-&gt;9bits的编码：9bits code的LSb等于输入的8bits的LSB，随后的7bit，每一bit的计算都基于如下公式: output[n] &#x3D; input[n] OR output[n-1]，或output[n] &#x3D; input[n] NOR output[n-1]。具体计算选择XOR（异或）还是XNOR（同或），取决于哪种模式编码得到的9bits code中的跳变更少（算法使用的判断条件如下流程图所示）。9bits code的MSb用于指示当前编码使用的是OR还是NOR。</p>
+<h5 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h5><p>在 HDMI 的 TMDS（Transition Minimized Differential Signaling）编码中，为了减少信号跳变、降低电磁干扰（EMI），对原始 8bit 数据进行编码时会尝试两种方式：<strong>XOR</strong> 和 <strong>XNOR</strong>，并选择其中<strong>跳变次数更少</strong>的一种。最终输出为 9bit 编码结果，其中最高位（MSB）用于指示所选的编码方式。</p>
+<p>假设输入 8bit 是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">input</span> = <span class="number">1100_1010</span></span><br><span class="line">         ↑    ↑</span><br><span class="line">       MSB    LSB</span><br><span class="line">第 <span class="number">1</span> 步：生成 9bit 的输出（先试 XOR）</span><br><span class="line">① output[<span class="number">0</span>] = <span class="built_in">input</span>[<span class="number">0</span>]（LSB 对齐）</span><br><span class="line">假设最右边是 bit0：</span><br><span class="line"><span class="built_in">input</span>:   i7 i6 i5 i4 i3 i2 i1 i0</span><br><span class="line">                         ↑</span><br><span class="line">output0 = i0</span><br><span class="line">例如：</span><br><span class="line">output[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">② 从 output[<span class="number">1</span>] 开始依次计算：</span><br><span class="line">output[n] = <span class="built_in">input</span>[n] XOR output[n-<span class="number">1</span>]</span><br><span class="line">举例：</span><br><span class="line">output[<span class="number">1</span>] = <span class="built_in">input</span>[<span class="number">1</span>] XOR output[<span class="number">0</span>]</span><br><span class="line">output[<span class="number">2</span>] = <span class="built_in">input</span>[<span class="number">2</span>] XOR output[<span class="number">1</span>]</span><br><span class="line">output[<span class="number">3</span>] = <span class="built_in">input</span>[<span class="number">3</span>] XOR output[<span class="number">2</span>]</span><br><span class="line">...</span><br><span class="line">一直到 output[<span class="number">7</span>]</span><br><span class="line">这样就得到 一个 8bit 序列（递推生成）</span><br><span class="line">③ 第 9bit（MSB）标记：</span><br><span class="line">MSB = <span class="number">0</span>  (代表使用 XOR)</span><br><span class="line">第 <span class="number">2</span> 步：再试一次 XNOR</span><br><span class="line">同样步骤：</span><br><span class="line">output[n] = <span class="built_in">input</span>[n] XNOR output[n-<span class="number">1</span>]</span><br><span class="line">这样得到另一套 9bit 序列。</span><br><span class="line">第 <span class="number">3</span> 步：比较两套 9bit 的跳变次数</span><br><span class="line">例如你算出来：</span><br><span class="line">XOR 方式：出现 <span class="number">5</span> 次跳变</span><br><span class="line">XNOR 方式：出现 <span class="number">2</span> 次跳变</span><br><span class="line">👉 选择跳变少的 XNOR</span><br><span class="line">并把 9bit 的 MSB 设置为：</span><br><span class="line">MSB = <span class="number">1</span>   （代表选择了 XNOR）</span><br></pre></td></tr></table></figure>
+
+<h4 id="Step-2：9bit-→-10bit（保持直流平衡）"><a href="#Step-2：9bit-→-10bit（保持直流平衡）" class="headerlink" title="Step 2：9bit → 10bit（保持直流平衡）"></a>Step 2：9bit → 10bit（保持直流平衡）</h4><ul>
+<li>第二步9-&gt;10bits的编码：实现数据流的直流平衡。添加一个第10bit的最高位，以指示是否对数据进行按位取反。编码器基于目前已传输的数据流中0和1的数量差异，以及当前character已编码的低8bits的0和1的数量差异，决定是否进行取反。</li>
+<li>这里的取反是根据前面发了很久的数据，计算出来现在是0多还是1多，然后决定是否取反这样</li>
+<li>所有的编码流程如下图所示。整个编码会产生460种不同的10 bits characters。在编码器正确工作的情况下，不应在Video Data Period产生其他的characters。<br><img src="/img/02_HDMI/15.png" alt="TMDS编码流程1" loading='lazy'><br><img src="/img/02_HDMI/16.png" alt="TMDS编码流程2" loading='lazy'></li>
+</ul>
+<h4 id="TMDS-字符集"><a href="#TMDS-字符集" class="headerlink" title="TMDS 字符集"></a>TMDS 字符集</h4><p>TMDS 编码共生成约 <strong>460 种有效的 10bit 字符</strong>。<br>Video Data Period 内不应出现非 TMDS 编码字符；<br>Guard Band、Control Period、Data Island 使用不同字符集，Sink 可根据字符类型识别当前 Period。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://djdgctw.github.io">djdgctw</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://djdgctw.github.io/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/">https://djdgctw.github.io/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://djdgctw.github.io" target="_blank">djdgctw 的硬件笔记</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/HDMI/">HDMI</a></div><div class="post-share"><div class="social-share" data-image="/img/02_HDMI/HDMI%E6%A1%86%E6%9E%B6%E5%9B%BE.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/11/23/%E5%9F%BA%E4%BA%8Epython%E7%9A%84cocotb%E5%BA%93%E5%AF%B9verilog%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E6%95%99%E7%A8%8B-%E5%89%8D%E4%BC%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" title="基于 Python 的 Cocotb 仿真环境配置：Verilator · Cocotb · GTKWave"><img class="cover" src="/img/01_cocotb/03.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post" loading='lazy'><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">基于 Python 的 Cocotb 仿真环境配置：Verilator · Cocotb · GTKWave</div></div><div class="info-2"><div class="info-item-1"> “跑通 demo 之前，先把环境配稳定。” —— 把每一步都写清楚，后续实验就能快速复现。  1. Python &amp; Cocotb 安装1.1 Python 环境123456# 推荐 Python 3.10+，conda / pyenv 均可sudo apt updatesudo apt install python3 python3-pip python3-venv -ypython3 -m venv ~/.venvs/cocotbsource ~/.venvs/cocotb/bin/activa...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/%E7%8C%AB%E7%8C%AB.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/ loading='lazy'></div><div class="author-info-name">djdgctw</div><div class="author-info-description">FPGA / 视频链路 / 嵌入式系统</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/djdgctw"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/djdgctw" target="_blank" title="GitHub"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:fpga@djdgctw.dev" target="_blank" title="Mail"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="/archives/" target="_blank" title="Lab Notes"><i class="fas fa-terminal" style="color: #2563eb;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fas fa-rss" style="color: #d35400;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><strong>更新中：</strong> HDMI 1.4 协议笔记 · Mini LED 视频链路实验</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HDMI%E4%BC%A0%E8%BE%93%E7%B3%BB%E7%BB%9F%E7%BB%BC%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">HDMI传输系统综述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HDMI%E4%BF%A1%E5%8F%B7%E7%BC%96%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">HDMI信号编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Control-data"><span class="toc-number">1.1.1.</span> <span class="toc-text">Control data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packet-data"><span class="toc-number">1.1.2.</span> <span class="toc-text">Packet data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Video-data"><span class="toc-number">1.1.3.</span> <span class="toc-text">Video data</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Island-Period-%E5%92%8C-Video-Data-Period-%E7%9A%84%E4%BC%A0%E8%BE%93%E8%A7%84%E5%88%99"><span class="toc-number">1.2.</span> <span class="toc-text">Data Island Period 和 Video Data Period 的传输规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Island-Period"><span class="toc-number">1.2.1.</span> <span class="toc-text">Data Island Period</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Video-Data-Period"><span class="toc-number">1.2.2.</span> <span class="toc-text">Video Data Period</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Control-Period"><span class="toc-number">1.3.</span> <span class="toc-text">Control Period</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Preamble"><span class="toc-number">1.3.1.</span> <span class="toc-text">Preamble</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Character-Synchronization"><span class="toc-number">1.3.2.</span> <span class="toc-text">Character Synchronization</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Control-Period-Encoding"><span class="toc-number">1.3.3.</span> <span class="toc-text">Control Period Encoding</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-Island-Period-1"><span class="toc-number">1.4.</span> <span class="toc-text">Data Island Period</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Island-Guard-Band"><span class="toc-number">1.4.1.</span> <span class="toc-text">Data Island Guard Band</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Island-Packet%EF%BC%88%E6%95%B0%E6%8D%AE%E5%B2%9B%E5%8C%85%EF%BC%89%E7%BB%93%E6%9E%84%E8%AF%B4%E6%98%8E"><span class="toc-number">1.4.2.</span> <span class="toc-text">Data Island Packet（数据岛包）结构说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Packet-Header%EF%BC%8824bit-%E6%95%B0%E6%8D%AE-8bit-BCH-%E6%A0%A1%E9%AA%8C%EF%BC%89"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">1. Packet Header（24bit 数据 + 8bit BCH 校验）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Packet-Body%EF%BC%884-%E4%B8%AA-Subpacket%EF%BC%89"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">2. Packet Body（4 个 Subpacket）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Subpacket-%E5%88%B0-Packet-Bytes%EF%BC%88PBx%EF%BC%89%E7%9A%84%E6%98%A0%E5%B0%84"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">3. Subpacket 到 Packet Bytes（PBx）的映射</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A0%E9%94%99%E4%BD%8D%E8%AE%A1%E7%AE%97%EF%BC%88ECC%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">纠错位计算（ECC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Packet-Header-%E5%92%8C-Packet-Body-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.4.4.</span> <span class="toc-text">Packet Header 和 Packet Body 的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Island-Period-%E7%BC%96%E7%A0%81%EF%BC%9ATERC4%EF%BC%88%E5%90%8E%E9%9D%A2%E4%BF%AE%EF%BC%89"><span class="toc-number">1.4.5.</span> <span class="toc-text">Data Island Period 编码：TERC4（后面修）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Video-Data-Period-1"><span class="toc-number">1.4.6.</span> <span class="toc-text">Video Data Period</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Video-Data-Period-Signal"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">1. Video Data Period Signal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Pixel-Data-%E5%83%8F%E7%B4%A0%E6%95%B0%E6%8D%AE-%E5%90%8E%E9%9D%A2%E4%BF%AE"><span class="toc-number">1.4.6.2.</span> <span class="toc-text">3. Pixel Data(像素数据)(后面修)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Video-Data-Period-%E7%BC%96%E7%A0%81%EF%BC%9ATMDS%EF%BC%888bit-%E2%86%92-10bit%EF%BC%89"><span class="toc-number">1.4.7.</span> <span class="toc-text">Video Data Period 编码：TMDS（8bit → 10bit）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-1%EF%BC%9A8bit-%E2%86%92-9bit%EF%BC%88%E6%9C%80%E5%B0%8F%E5%8C%96%E8%B7%B3%E5%8F%98%EF%BC%89"><span class="toc-number">1.4.7.1.</span> <span class="toc-text">Step 1：8bit → 9bit（最小化跳变）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90"><span class="toc-number">1.4.7.1.1.</span> <span class="toc-text">解析</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Step-2%EF%BC%9A9bit-%E2%86%92-10bit%EF%BC%88%E4%BF%9D%E6%8C%81%E7%9B%B4%E6%B5%81%E5%B9%B3%E8%A1%A1%EF%BC%89"><span class="toc-number">1.4.7.2.</span> <span class="toc-text">Step 2：9bit → 10bit（保持直流平衡）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TMDS-%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="toc-number">1.4.7.3.</span> <span class="toc-text">TMDS 字符集</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="HDMI1.4协议阅读笔记"><img src="/img/02_HDMI/HDMI%E6%A1%86%E6%9E%B6%E5%9B%BE.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HDMI1.4协议阅读笔记"/ loading='lazy'></a><div class="content"><a class="title" href="/2025/11/24/HDMI1.4%E5%8D%8F%E8%AE%AE%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/" title="HDMI1.4协议阅读笔记">HDMI1.4协议阅读笔记</a><time datetime="2025-11-24T08:46:20.481Z" title="更新于 2025-11-24 16:46:20">2025-11-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/23/%E5%9F%BA%E4%BA%8Epython%E7%9A%84cocotb%E5%BA%93%E5%AF%B9verilog%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E6%95%99%E7%A8%8B-%E5%89%8D%E4%BC%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" title="基于 Python 的 Cocotb 仿真环境配置：Verilator · Cocotb · GTKWave"><img src="/img/01_cocotb/03.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于 Python 的 Cocotb 仿真环境配置：Verilator · Cocotb · GTKWave"/ loading='lazy'></a><div class="content"><a class="title" href="/2025/11/23/%E5%9F%BA%E4%BA%8Epython%E7%9A%84cocotb%E5%BA%93%E5%AF%B9verilog%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E6%95%99%E7%A8%8B-%E5%89%8D%E4%BC%A0%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%8F%8A%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/" title="基于 Python 的 Cocotb 仿真环境配置：Verilator · Cocotb · GTKWave">基于 Python 的 Cocotb 仿真环境配置：Verilator · Cocotb · GTKWave</a><time datetime="2025-11-23T06:31:28.059Z" title="更新于 2025-11-23 14:31:28">2025-11-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/23/%E5%9F%BA%E4%BA%8Epython%E7%9A%84cocotb%E5%BA%93%E5%AF%B9verilog%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E6%95%99%E7%A8%8B-%E4%B8%80/" title="基于 Python 的 Cocotb 库对 Verilog 进行仿真教程（一）"><img src="/img/01_cocotb/03.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于 Python 的 Cocotb 库对 Verilog 进行仿真教程（一）"/ loading='lazy'></a><div class="content"><a class="title" href="/2025/11/23/%E5%9F%BA%E4%BA%8Epython%E7%9A%84cocotb%E5%BA%93%E5%AF%B9verilog%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E6%95%99%E7%A8%8B-%E4%B8%80/" title="基于 Python 的 Cocotb 库对 Verilog 进行仿真教程（一）">基于 Python 的 Cocotb 库对 Verilog 进行仿真教程（一）</a><time datetime="2025-11-23T06:28:38.974Z" title="更新于 2025-11-23 14:28:38">2025-11-23</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=1600&amp;q=80&amp;ixlib=rb-4.1.0);"><div class="footer-flex"><div class="footer-flex-items" style="flex-grow:1"><div class="footer-flex-item"><div class="footer-flex-title">社交</div><div class="footer-flex-content"><a href="https://github.com/djdgctw" target="_blank" title="GitHub">GitHub</a><a href="/atom.xml" target="_blank" title="RSS">RSS</a></div></div><div class="footer-flex-item"><div class="footer-flex-title">阅读指南</div><div class="footer-flex-content"><div><a href="/categories/">分类</a></div><div><a href="/tags/">标签</a></div></div></div></div></div><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2017 - 2025 By djdgctw</span><span class="framework-info"><span class="footer-separator">|</span><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.2</a></span></div><div class="footer_custom_text">记录算力世界里的每一帧灵感 · Powered by Hexo × Butterfly</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.2"></script><script src="/js/main.js?v=5.5.2"></script><div class="js-pjax"></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/dist/canvas-ribbon.min.js" size="120" alpha="0.18" zIndex="-2" mobile="false" data-click="false"></script><script async data-pjax src="/"></script></div></body></html>
