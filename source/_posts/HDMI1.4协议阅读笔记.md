@@ -21,9 +21,9 @@ top_img: /img/01_cocotb/env-hero.png
 HDMI物理层的实现不在此次赘述，下面直接进入HDMI的数据链路层。
 
 ## HDMI信号编码
-
+HDMI 链接以三种模式之一运行：任何两个不是控制周期的周期之间需要一个控制周期。
 HDMI一共有三种传输模式：Control Period传输control data；Data Island Period传输packet data；Video Data Period传输video data。
-
+- ControlPeriod 控制周期：主要用于控制接下来传输的是dataisland 还是 videodata；
 同步信号HSYNC和VSYNC会在特定的行、列位置拉起，用于source和sink之间的同步。可以看到实际传输的帧大小是要大于视频大小（720*480p），包括额外插入了一些行，并且行的长度也得到了扩展，这些扩展的区域被称为blank区（包括Vblank和Hblank），blank区由Control Period和Data Island Period交替填充，其中在Data Island Period会传输音频数据和其他辅助数据（例如像素格式等）。实际传输Video Data Period的区域称为active区，传输我们最终会在显示器上看到的视频图像数据。
 ![显示时序图](/img/02_HDMI/02.png)
 在HDMI clock channel上每一拍时钟（又称为一个TMDS Clock），每个data channel上都会传输10bit的character。这10bit的character，对于不同的数据，由不同的编码方式得到：
@@ -33,16 +33,116 @@ HDMI一共有三种传输模式：Control Period传输control data；Data Island
 
 换句话说，每个TMDS Clock，在每个data channel上，会传输2bit的control data，或者4bit的packet data，或者10bit的control data。
 ![信号传输框架](/img/02_HDMI/03.png)
-### Control data
-- 在channel 0的2bit数据代表HSYNC和VSYNC
-- channel 1和channel 2上的4bit数据组合构成CTL0-3，其代表的具体信息在后文介绍。
+### 视频数据传输期（Video Data Period）
 
-### Packet data
-- channel 0上的4bit数据包含HSYNC、VSYNC以及packet header，packet header用于sink判断当前packet的类型（音频包、辅助信息包等）
-- channel 1和channel 2上传输实际packet信息，如音频包会在这两个channel上传输音频信号采样值。
+在 Video Data Period 内，HDMI 数据通道传输的是视频像素数据。
+典型视频像素为 24bit（8bit × R/G/B），分别进入 3 路 TMDS 通道（Data0、Data1、Data2）。
 
-### Video data
-- channel 0到channel 2上总共24bit，均为视频像素数据。
+每个 TMDS 通道会将 8bit 像素数据 TMDS 编码成 10bit，编码完成后：
+
+每个 TMDS 时钟周期（TMDS Clock = Pixel Clock）
+
+每个数据通道传输一个 10bit TMDS character
+
+三个通道共同完成一组像素的传输
+
+最终在接收端，TMDS 解码后恢复为 24bit 的 R/G/B 像素。
+
+### 数据包传输期（Data Island Period）
+
+在 Data Island Period 中，HDMI 通道不传输视频像素，而是承载：音频数据（Audio Sample）、辅助数据（AVI InfoFrame、Vendor InfoFrame 等），这些数据以 4bit 为单位，称为 TERC4 group。
+流程如下：Data Island 的原始数据被拆分成 4bit group,每组 4bit 经过 TERC4 编码 → 10bit,三个通道继续保持 TMDS 时钟同步传输,接收端识别 GuardBand → 识别 Data Island → 解码 TERC4
+与 Video Data 类似，每个 TMDS Clock 都会在每个通道上传 10bit，但这些 10bit 是由 TERC4 产生的。
+### GuardBand（保护频带）
+无论是：
+Video Data Period → Control Period
+Control Period → Data Island Period
+Data Island Period → Video Data Period
+HDMI 都必须使用 GuardBand 来标记传输区间的边界。
+GuardBand 由 两个特殊 TMDS 字符组成，其设计目的：
+- 清晰标记当前周期结束
+- 明确提示接收端：接下来是 Video 还是 Data Island
+- 避免同步过程中误判
+GuardBand 在 HDMI 链路的时序解析中极其关键。
+### 控制数据传输期（Control Period）
+
+在 Video 与 Data Island 之间，总会有 Control Period。
+在 Control Period 中：
+
+每个 TMDS 通道携带固定的 2bit control data
+
+三个通道共 6bit control 信息
+
+其构成如下：
+
+通道	2bit 数据内容
+Channel 0	HSYNC、VSYNC（行/场同步信号）
+Channel 1	CTL0、CTL1
+Channel 2	CTL2、CTL3
+
+其中：
+
+HSYNC / VSYNC 是显示器同步的重要标志
+
+CTL0~CTL3 用于指示：
+下一个周期是 Video Data 还是 Data Island
+
+Control Period 的 TMDS 编码方式是固定的：
+2bit → 10bit 的特殊控制编码（非 TMDS 8b10b，也非 TERC4）。
+
+### 三种传输周期的编码方式总结
+
+下表是各种数据在 HDMI 中的编码类型概览：
+
+传输阶段	原始数据位宽	编码方式	输出 TMDS 宽度
+Control Period	2 bit	Control Encoding	10 bit
+Data Island Period	4 bit	TERC4 (4→10 编码)	10 bit
+Video Data Period	8 bit	TMDS 8→10 编码	10 bit
+GuardBand 固定编码
+换句话说：
+每个 TMDS Clock，HDMI 每条数据通道始终传输 10bit，只是编码方式不同。
+![编码图](/img/02_HDMI/17.png)
+## Control Period
+Control Period 在 HDMI TMDS 链路中用于承上启下：提供 HSYNC / VSYNC（在 Channel 0）、提供 CTL0~CTL3（在 Channel 1 和 2）、
+通过一串 相同的控制字符（Preamble） 明确接下来要进入的周期类型：
+- Video Data Period
+- Data Island Period
+在 HDMI 1.4 协议中，CTL0~CTL3 的应用包括：
+- Video Data Preamble（视频周期前导码）
+- Data Island Preamble（数据岛周期前导码）
+- Character Synchronization（字符同步）
+- HDCP 1.4 中的 EESS 信号传输
+### Preamble（前导码）
+在每个 Video Data Period 或 Data Island Period 之前，都会插入一个 Control Period 序列（Preamble）。
+该序列由 8 个相同的 TMDS 控制字符组成，用于 通知接收端下一个数据周期的类型。
+![](/img/02_HDMI/05.png)
+在前导码期间：
+Channel 0 的 HSYNC 和 VSYNC 按实际行场时序继续传输（不会暂停）
+Channel 1 和 Channel 2 的 CTL0~CTL3 用于指示接下来的周期类型
+![](/img/02_HDMI/06.png)
+### Preamble 的周期类型判定（CTL0~CTL3）
+HDMI 规定 只有两种合法的 Preamble 控制字符组合，用于表示下一个数据周期的类型：
+CTL0	CTL1	CTL2	CTL3	数据周期类型
+1	0	0	0	Video Data Period（视频数据周期）
+1	0	1	0	Data Island Period（数据岛周期）
+解释如下：
+CTL = 1000
+→ 表示下一个周期是 Video Data Period
+→ 随后进入 Video Guard Band 再开始传输视频数据
+CTL = 1010
+→ 表示下一个周期是 Data Island Period
+→ 随后进入 Data Island Guard Band 再开始传输音频或辅助数据
+### Guard Band 与 Data Period 开始的标识
+Preamble 结束后，TMDS 链路会发送 Guard Band（保护带）：
+Video Guard Band：标识视频数据即将到来
+Data Island Guard Band：标识数据岛即将到来
+接收端通过 “前导码 → GuardBand 的转换” 明确识别 Data Period（数据周期）的开始。
+换句话说：
+Preamble 决定周期类型，GuardBand 决定周期开始。
+⚠️ 注意：Data Island Preamble 的限制
+协议要求：
+CTL = 1010（Data Island Preamble）不得在非 Preamble 时刻发送。
+否则会导致接收端错误地认为一个 Data Island 周期即将到来，因此 HDMI 发射端必须严格确保：仅在合法 Preamble 时刻发送 1010 控制字符，其他 Control Period 中不得出现该组合
 
 ## Data Island Period 和 Video Data Period 的传输规则
 
@@ -58,13 +158,7 @@ HDMI一共有三种传输模式：Control Period传输control data；Data Island
 - Video Data Preamble前面同样会有至少连续4 TMDS Clock的Control Period。
 - Data Island Period和Video Data Period不能紧贴，无论哪一个在前，在前者传输完成后必须传输一段Control Period，才能传输后者。
 ![TMDS Period AND Encode](/img/02_HDMI/04.png)
-## Control Period
 
-Control Period在channel 0上传输HSYNC和VSYNC，在channel 1-2上传输CTL0-3。HDMI1.4协议下，CTL0-3主要用于Video Data Preamble和Data Island Preamble传输，以及被sink用作为Character Synchronization（也用于HDCP1.4 EESS信号传输）。
-![](/img/02_HDMI/05.png)
-### Preamble
-Channel 0上的HSYNC和VSYNC在Preamble期间按实际情况正常传输
-![](/img/02_HDMI/06.png)
 ### Character Synchronization
 - TMDS Character是指每次编码后，每个TMDS Clock传输的10 bit值。
 - 经过编码后，Video Data Period和Data Island Period的每个character会包含5次或者更少的1->0或0->1跳转，而Control Period会包含7次或更多的跳转。

@@ -49,7 +49,7 @@ powershell -ExecutionPolicy Bypass -File tools/blog-tool.ps1 -Action preview
 #    如有源码改动，会提示输入 git commit 信息并推送 main 分支
 powershell -ExecutionPolicy Bypass -File tools/blog-tool.ps1 -Action deploy
 ```
-
+每次更新博客仍然运行 hexo clean && hexo g && hexo d 保持 sitemap 最新。
 根据提示操作即可快速预览或发布。
 
 ## 4. 写作 / 内容维护
